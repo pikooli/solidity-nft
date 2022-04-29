@@ -1,29 +1,32 @@
 import type { NextPage } from "next";
 import { useContext, useEffect, useState } from "react";
+import fetch from "lib/customFetch";
 import Layout from "components/Layout";
 import AppContext from "components/AppContext";
-import contractService from "services/contractService";
+
+const URL = "/api/listnft";
 
 const NftPage: NextPage = () => {
   const context = useContext(AppContext);
-  const contract = context?.values?.contract;
   const account = context?.values?.account;
-  const [tokens, setTokens] = useState<any>();
+  const [nfts, setNfts] = useState<any>();
 
   useEffect(() => {
-    if (contract && account) {
-      contractService
-        .getPastTransfer(contract, account)
-        .then((events) =>
-          setTokens(events.map((event) => event.returnValues.tokenId))
-        );
+    if (account) {
+      fetch({ url: URL, params: { account } }).then((res) => {
+        if (res.status === 200) {
+          res.json().then((data) => {
+            setNfts(data.nfts);
+          });
+        }
+      });
     }
-  }, [contract]);
+  }, [account]);
 
   return (
     <Layout>
       <div className="w-3/4 break-all">
-        {tokens?.map((token: Number) => token)}
+        {nfts?.map((nft: Number) => JSON.stringify(nft))}
       </div>
     </Layout>
   );
