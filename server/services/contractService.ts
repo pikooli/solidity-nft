@@ -1,4 +1,4 @@
-import { Contract } from "web3-eth-contract";
+import { Contract, PastEventOptions } from "web3-eth-contract";
 import Web3 from "web3";
 import { AbiItem } from "web3-utils";
 import GameItemAbi from "public/GameItem.json";
@@ -7,12 +7,9 @@ export const createContract = ({
   provider,
   contractAddress,
 }: {
+  provider: Web3;
   contractAddress: string;
-  provider?: Web3;
 }) => {
-  const networkAddress = process.env.NETWORK_ADDRESS || "";
-  if (!provider)
-    provider = new Web3(new Web3.providers.HttpProvider(networkAddress));
   const contract = new provider.eth.Contract(
     GameItemAbi.abi as AbiItem[],
     contractAddress
@@ -20,11 +17,18 @@ export const createContract = ({
   return contract;
 };
 
-export const getPastTransfer = async (contract: Contract, to: string) => {
+export const getPastTransfer = async (
+  contract: Contract,
+  filter?: PastEventOptions["filter"]
+) => {
   return await contract.getPastEvents("Transfer", {
-    filter: { to },
+    filter: filter,
     fromBlock: 0,
   });
+};
+
+export const getTransaction = async (provider: Web3, hash: string) => {
+  return await provider.eth.getTransaction(hash);
 };
 
 export const getOwnerOf = async (contract: Contract, tokenId: Number) => {
@@ -49,5 +53,6 @@ export default {
   getOwnerOf,
   getTokenUri,
   getTokensUri,
+  getTransaction,
   createContract,
 };

@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import fetch from "lib/customFetch";
 import Layout from "components/Layout";
 import AppContext from "components/AppContext";
+import { Nft } from "components/web3";
 
 const URL = "/api/listnft";
 
@@ -26,7 +27,9 @@ const NftPage: NextPage = () => {
   return (
     <Layout>
       <div className="w-3/4 break-all">
-        {nfts?.map((nft: Number) => JSON.stringify(nft))}
+        {nfts?.map((nft: any) => (
+          <Nft metadatapath={nft.uri} key={nft.id} />
+        ))}
       </div>
     </Layout>
   );

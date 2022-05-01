@@ -14,7 +14,7 @@ const TransferPage: NextPage = () => {
   useEffect(() => {
     if (contract && account) {
       contractService
-        .getPastTransfer(contract, account)
+        .getPastTransfer(contract, { to: account })
         .then((event) => setTransfers(event));
     }
   }, [contract]);

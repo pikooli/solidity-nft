@@ -11,3 +11,9 @@ type GlobalContext = {
   values: ContextValues;
   setValues: Function;
 };
+
+type Metadata = {
+  name: string;
+  description: string;
+  image: string;
+};
