@@ -2,6 +2,7 @@
 
 A solidity project where can mind nft, buy and sell them.
 
+Have this in a .env in server folder
 ````
 DATABASE_URL=postgres://root@localhost/nft
 NODE_ENV=dev
