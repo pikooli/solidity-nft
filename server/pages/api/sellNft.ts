@@ -1,14 +1,14 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import Web3 from "web3";
-import * as contractService from "services/contractService";
+import contractService from "services/contractService";
 import nftService from "services/nftService";
 
 const CONTRACTADDRESS = process.env.CONTRACT_ADDRESS || "";
 const networkAddress = process.env.NETWORK_ADDRESS || "";
 const provider = new Web3(new Web3.providers.HttpProvider(networkAddress));
 
-const contract = contractService.getContract({
+const contract = contractService.createContract({
   provider,
   contractAddress: CONTRACTADDRESS,
 });

@@ -31,7 +31,12 @@ const NavLink: React.FC<Props> = ({ className }) => {
 
   return (
     <ul className={`lg:flex ${className || ""}`}>
-      <LinkPage href="/nfts" text={"nfts"} active={active["/nfts"]} />
+      <LinkPage href="/upload" text={"upload"} active={active["/upload"]} />
+      <LinkPage
+        href="/collections"
+        text={"collections"}
+        active={active["/collections"]}
+      />
       <LinkPage
         href="/transfers"
         text={"transfers"}

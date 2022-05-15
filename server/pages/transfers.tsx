@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import Layout from "components/Layout";
 import AppContext from "components/AppContext";
 import Transfer from "components/web3/Transfer";
-import contractService from "services/contractService";
+import { getPastTransfer } from "services/contractService";
 
 const TransferPage: NextPage = () => {
   const context = useContext(AppContext);
@@ -13,9 +13,9 @@ const TransferPage: NextPage = () => {
 
   useEffect(() => {
     if (contract && account) {
-      contractService
-        .getPastTransfer(contract, { to: account })
-        .then((event) => setTransfers(event));
+      getPastTransfer(contract, { to: account }).then((event) =>
+        setTransfers(event)
+      );
     }
   }, [contract]);
 

@@ -3,14 +3,20 @@ import Web3 from "web3";
 import { AbiItem } from "web3-utils";
 import GameItemAbi from "public/GameItem.json";
 
-export const createContract = ({
+let contract: Contract | null = null;
+
+// more for backend
+export const getContract = ({
   provider,
   contractAddress,
 }: {
   provider: Web3;
   contractAddress: string;
 }) => {
-  const contract = new provider.eth.Contract(
+  if (contract) {
+    return contract;
+  }
+  contract = new provider.eth.Contract(
     GameItemAbi.abi as AbiItem[],
     contractAddress
   );
@@ -46,13 +52,4 @@ export const getTokensUri = async (contract: Contract, tokensId: Number[]) => {
     tokensUri.push(tokenUri);
   }
   return tokensUri;
-};
-
-export default {
-  getPastTransfer,
-  getOwnerOf,
-  getTokenUri,
-  getTokensUri,
-  getTransaction,
-  createContract,
 };

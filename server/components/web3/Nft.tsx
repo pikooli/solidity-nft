@@ -20,8 +20,10 @@ const Nft: React.FC<Props> = ({ metadatapath }) => {
   }
 
   return (
-    <div className="m-3 w-40">
-      <img src={metadata.image} />
+    <div>
+      <img src={metadata.image} className="border w-40" />
+      <div>Name: {metadata.name}</div>
+      <div>Description : {metadata.description}</div>
     </div>
   );
 };

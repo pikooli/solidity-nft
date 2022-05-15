@@ -1,5 +1,5 @@
 import Web3 from "web3";
-import { createContract } from "services/contractService";
+import { getContract as createContract } from "services/contractService";
 
 const getContract = async (provider: Web3) => {
   if (provider) {

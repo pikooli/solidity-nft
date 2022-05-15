@@ -8,7 +8,12 @@ type Props = {
   values: Obj;
 };
 
-const Form: React.FC<Props> = ({ setValues, values, onSubmit, className }) => {
+const CreateNftForm: React.FC<Props> = ({
+  setValues,
+  values,
+  onSubmit,
+  className,
+}) => {
   return (
     <form className={`text-black ${className || ""}`} onSubmit={onSubmit}>
       <div>
@@ -39,4 +44,4 @@ const Form: React.FC<Props> = ({ setValues, values, onSubmit, className }) => {
   );
 };
 
-export default Form;
+export default CreateNftForm;

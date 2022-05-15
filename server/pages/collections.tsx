@@ -4,13 +4,15 @@ import fetch from "lib/customFetch";
 import Layout from "components/Layout";
 import AppContext from "components/AppContext";
 import { Nft } from "components/web3";
+import SellNftForm from "components/SellNftForm";
 
 const URL = "/api/listnft";
 
-const NftPage: NextPage = () => {
+const Collections: NextPage = () => {
   const context = useContext(AppContext);
   const account = context?.values?.account;
   const [nfts, setNfts] = useState<any>();
+  const [values, setValues] = useState<Obj>({});
 
   useEffect(() => {
     if (account) {
@@ -24,15 +26,20 @@ const NftPage: NextPage = () => {
     }
   }, [account]);
 
+  const onSubmit = () => {};
+
   return (
     <Layout>
       <div className="w-3/4 break-all">
         {nfts?.map((nft: any) => (
-          <Nft metadatapath={nft.uri} key={nft.id} />
+          <div key={nft.id} className="border w-60 m-3">
+            <Nft metadatapath={nft.uri} />
+            <SellNftForm setValues={setValues} values={values} />
+          </div>
         ))}
       </div>
     </Layout>
   );
 };
 
-export default NftPage;
+export default Collections;

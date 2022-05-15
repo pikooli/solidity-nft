@@ -12,10 +12,12 @@ contract GameItem is ERC721URIStorage {
 
     constructor() ERC721("GameItem", "ITM") {}
 
-    function awardItem(address player, string memory tokenURI)
+    function awardItem(string memory tokenURI)
         public
+        payable
         returns (uint256)
     {
+        address player = msg.sender;
         _tokenIds.increment();
 
         uint256 newItemId = _tokenIds.current();
@@ -24,4 +26,18 @@ contract GameItem is ERC721URIStorage {
 
         return newItemId;
     }
+
+    function achatNft() public payable {
+        require()
+    }
+
+    
 }
+
+// function mintToken(address to, uint256 tokenId, string uri) public virtual payable {
+  
+//   require(msg.value >= 10, "Not enough ETH sent; check price!"); 
+  
+//   mint(to, tokenId);
+//   _setTokenURI(tokenId, uri);
+// }
