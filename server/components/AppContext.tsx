@@ -15,7 +15,6 @@ type Props = {
 //
 export const AppProvider: React.FC<Props> = ({ children }) => {
   const [values, setValues] = useState<Obj>({});
-
   useEffect(() => {
     getWeb3().then(async (web3) => {
       const contract = await getContract(web3);

@@ -12,9 +12,11 @@ const contract = contractService.getContract({
   provider,
   contractAddress: CONTRACTADDRESS,
 });
-
+interface NextApiRequestCustom extends NextApiRequest {
+  body: { transaction: any; account: string };
+}
 export default async function uploadNft(
-  req: NextApiRequest,
+  req: NextApiRequestCustom,
   res: NextApiResponse
 ) {
   const { transaction, account } = req.body;

@@ -1,14 +1,14 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import Web3 from "web3";
-import contractService from "services/contractService";
+import { getContract, getOwnerOf, getTokenUri } from "services/contractService";
 import nftService from "services/nftService";
 
 const CONTRACTADDRESS = process.env.CONTRACT_ADDRESS || "";
 const networkAddress = process.env.NETWORK_ADDRESS || "";
 const provider = new Web3(new Web3.providers.HttpProvider(networkAddress));
 
-const contract = contractService.createContract({
+const contract = getContract({
   provider,
   contractAddress: CONTRACTADDRESS,
 });
@@ -22,8 +22,8 @@ export default async function uploadNft(
   const { Transfer } = events;
   const { returnValues } = Transfer;
   const { tokenId, to } = returnValues;
-  const ownerOfContract = await contractService.getOwnerOf(contract, tokenId);
-  const tokenUri = await contractService.getTokenUri(contract, tokenId);
+  const ownerOfContract = await getOwnerOf(contract, tokenId);
+  const tokenUri = await getTokenUri(contract, tokenId);
   if (!account || !tokenId || !tokenUri) {
     return res.status(422).json({ error: "Missing value" });
   }

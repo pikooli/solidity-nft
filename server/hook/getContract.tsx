@@ -6,6 +6,7 @@ const getContract = async (provider: Web3) => {
     const networkId = await provider.eth.net.getId();
     if (networkId == 5777) {
       const contractAddress = process.env.CONTRACT_ADDRESS || "";
+      console.log(contractAddress);
       return createContract({
         provider,
         contractAddress,
