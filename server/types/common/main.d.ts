@@ -4,7 +4,8 @@
 type ContextValues = {
   provider?: import("web3").default;
   account?: string;
-  contract?: import("web3-eth-contract").Contract;
+  contractNft?: import("web3-eth-contract").Contract;
+  contractMarketNft?: import("web3-eth-contract").Contract;
 };
 
 type GlobalContext = {
@@ -16,4 +17,13 @@ type Metadata = {
   name: string;
   description: string;
   image: string;
+};
+
+type Nft = {
+  createdAt: Date;
+  id: string;
+  price?: number;
+  updatedAt: Date;
+  uri: string;
+  userId: string;
 };

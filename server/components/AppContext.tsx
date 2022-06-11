@@ -1,6 +1,6 @@
 import React, { useState, createContext, useEffect } from "react";
 import getWeb3 from "services/getWeb3";
-import getContract from "hook/getContract";
+import getContract from "hook/getContracts";
 import getAccount from "hook/getAccount";
 
 //
@@ -17,13 +17,15 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
   const [values, setValues] = useState<Obj>({});
   useEffect(() => {
     getWeb3().then(async (web3) => {
-      const contract = await getContract(web3);
+      const contractNft = await getContract.getContractNft(web3);
+      const contractMarketNft = await getContract.getContractMarketNft(web3);
       const account = await getAccount(web3);
       setValues((prev: ContextValues) => ({
         ...prev,
         provider: web3,
         account,
-        contract,
+        contractNft,
+        contractMarketNft,
       }));
     });
   }, []);

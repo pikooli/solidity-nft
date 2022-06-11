@@ -1,8 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import Web3 from "web3";
-import { getContract, getOwnerOf, getTokenUri } from "services/contractService";
-import nftService from "services/nftService";
+import {
+  getContract,
+  getOwnerOf,
+  getTokenUri,
+} from "services/NftContractService";
+import prismaService from "services/prismaService";
 
 const CONTRACTADDRESS = process.env.CONTRACT_ADDRESS || "";
 const networkAddress = process.env.NETWORK_ADDRESS || "";
@@ -30,7 +34,7 @@ export default async function uploadNft(
   if (to !== account || account !== ownerOfContract) {
     return res.status(403).json({ error: "Not authorized" });
   }
-  await nftService.storeNft({
+  await prismaService.storeNft({
     account,
     tokenId: Number(tokenId),
     tokenUri,

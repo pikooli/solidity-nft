@@ -1,7 +1,7 @@
 import { Contract, PastEventOptions } from "web3-eth-contract";
 import Web3 from "web3";
 import { AbiItem } from "web3-utils";
-import ContractAbi from "public/MarketNft.json";
+import NftAbi from "public/Nft.json";
 
 export let contract: Contract | null = null;
 
@@ -18,7 +18,7 @@ export const getContract = ({
     return contract;
   }
   contract = new provider.eth.Contract(
-    ContractAbi.abi as AbiItem[],
+    NftAbi.abi as AbiItem[],
     contractAddress
   );
   return contract;
@@ -68,17 +68,16 @@ export const safeTransferFrom = async ({
   receiverId,
 }: {
   contract: Contract;
-  tokenId: Number;
-  senderId: Number;
-  receiverId: Number;
+  tokenId: string;
+  senderId: string;
+  receiverId: string;
 }) => {
   try {
-    const transfer = await contract.methods.safeTransferFrom(
+    return await contract.methods["safeTransferFrom(address,address,uint256)"](
       senderId,
       receiverId,
       tokenId
-    );
-    return transfer;
+    ).send({ from: senderId });
   } catch (e) {
     console.log("transfer didn't work");
   }
@@ -88,13 +87,28 @@ export const safeTransferFrom = async ({
 export const approve = async ({
   contract,
   tokenId,
+  senderId,
   to,
 }: {
   contract: Contract;
-  tokenId: Number;
-  to: Number;
+  tokenId: string;
+  senderId: string;
+  to: string;
 }) => {
-  await contract.methods.approve(to, tokenId);
+  return await contract.methods["approve(address,uint256)"](to, tokenId).send({
+    from: senderId,
+  });
+};
+
+// ==================
+export const getApproved = async ({
+  contract,
+  tokenId,
+}: {
+  contract: Contract;
+  tokenId: string;
+}) => {
+  return await contract.methods["getApproved(uint256)"](tokenId).call();
 };
 
 // ==================
@@ -112,9 +126,9 @@ export const payToMint = async ({
     value: Web3.utils.toWei("0.5"),
   };
   try {
-    const response = await contract.methods.payToMint(uri).send(options);
-    return response;
+    return await contract.methods.payToMint(uri).send(options);
   } catch (e) {
+    console.log(e);
     return null;
   }
 };

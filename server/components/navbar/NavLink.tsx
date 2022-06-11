@@ -38,6 +38,11 @@ const NavLink: React.FC<Props> = ({ className }) => {
         active={active["/collections"]}
       />
       <LinkPage
+        href="/marketplace"
+        text={"marketplace"}
+        active={active["/marketplace"]}
+      />
+      <LinkPage
         href="/transfers"
         text={"transfers"}
         active={active["/transfers"]}

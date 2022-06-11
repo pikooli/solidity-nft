@@ -1,19 +1,18 @@
-import React from "react";
-import ReactImgPrev from "react-img-prev";
-import { FloatInput, FloatTextArea } from "components/forms";
+import React, { SetStateAction } from "react";
+import { FloatInput } from "components/forms";
 
-type Props = {
+export type SellNftFormViewProps = {
   className?: string;
-  onSubmit?: React.FormEventHandler<HTMLFormElement>;
-  setValues: Function;
-  values: Obj;
+  onSubmit: (e: FormEvent) => void;
+  setValues: React.Dispatch<SetStateAction<Obj>>;
+  response: string;
 };
 
-const SellNftForm: React.FC<Props> = ({
-  setValues,
-  values,
-  onSubmit,
+export const SellNftFormView: React.FC<SellNftFormViewProps> = ({
   className,
+  onSubmit,
+  setValues,
+  response,
 }) => {
   return (
     <form className={`text-black ${className || ""}`} onSubmit={onSubmit}>
@@ -22,7 +21,7 @@ const SellNftForm: React.FC<Props> = ({
         name="eth"
         label="Price Eth"
         onChange={(e) =>
-          setValues((prev: Obj) => ({ ...prev, eth: e.target.value }))
+          setValues((prev: Obj) => ({ ...prev, price: e.target.value }))
         }
       />
       <button
@@ -31,8 +30,7 @@ const SellNftForm: React.FC<Props> = ({
       >
         Submit
       </button>
+      {response}
     </form>
   );
 };
-
-export default SellNftForm;

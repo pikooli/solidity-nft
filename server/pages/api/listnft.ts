@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import nftService from "services/nftService";
+import prismaService from "services/prismaService";
 
 export default async function listNft(
   req: NextApiRequest,
@@ -9,6 +9,6 @@ export default async function listNft(
   if (!account) {
     return res.status(422).json({ error: "Missing value" });
   }
-  const nfts = await nftService.findNfts({ account: account as string });
+  const nfts = await prismaService.findNfts({ account: account as string });
   res.json({ nfts });
 }

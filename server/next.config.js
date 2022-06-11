@@ -5,7 +5,8 @@ const nextConfig = {
   reactStrictMode: true,
   trailingSlash: true,
   env: {
-    CONTRACT_ADDRESS: process.env.CONTRACT_ADDRESS,
+    CONTRACT_ADDRESS_NFT: process.env.CONTRACT_ADDRESS_NFT,
+    CONTRACT_ADDRESS_MARKET: process.env.CONTRACT_ADDRESS_MARKET,
   },
 };
 

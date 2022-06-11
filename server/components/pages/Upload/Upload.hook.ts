@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import fetch from "lib/customFetch";
 import AppContext from "components/AppContext";
-import { payToMint } from "services/contractService";
+import { payToMint } from "services/NftContractService";
 
 const URL_FILE = "/api/uploadfile";
 const URL_NFT = "/api/uploadnft";
@@ -9,7 +9,7 @@ const URL_NFT = "/api/uploadnft";
 export const UploadHook = () => {
   const context = useContext(AppContext);
   const account = context?.values?.account;
-  const contract = context?.values?.contract;
+  const contractNft = context?.values?.contractNft;
   const [values, setValues] = useState<Obj>({});
   const [result, setResult] = useState("");
 
@@ -25,9 +25,9 @@ export const UploadHook = () => {
       fetch({ url: URL_FILE, method: "POST", body }).then(async (res) => {
         if (res.status === 200) {
           const { metadatapath } = await res.json();
-          if (contract) {
+          if (contractNft) {
             const transaction = await payToMint({
-              contract,
+              contract: contractNft,
               account,
               uri: metadatapath,
             });
