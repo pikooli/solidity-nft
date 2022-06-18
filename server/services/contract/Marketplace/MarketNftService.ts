@@ -1,11 +1,12 @@
 import { Contract } from "web3-eth-contract";
-import { approve, getApproved } from "services/NftContractService";
+import { approve, getApproved } from "services/contract/Nft/NftContractService";
 import {
   listItem,
   updateListing,
   getListing,
-} from "services/MarketNftContractService";
-// process.env.CONTRACT_ADDRESS_NFT
+} from "services/contract/Marketplace/MarketNftContractService";
+
+// here is function that can make some check and call multiple function of the contract
 
 type ListNft = {
   contractNft: Contract;
@@ -48,7 +49,6 @@ export const listNft = async ({
     contractAddress,
     tokenId,
   });
-
   if (transactionListing) {
     if (transactionListing.price !== price) {
       const translation = await updateListing({

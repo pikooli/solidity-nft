@@ -17,9 +17,10 @@ const FloatInput: React.FC<Props> = ({
   classLabel,
   classInput,
   onChange,
+  value,
 }) => {
   return (
-    <div className={`relative z-0 mb-6 w-full group ${className || ""}`}>
+    <div className={`relative z-0 mb-6 w-full group  ${className || ""}`}>
       <input
         type={type}
         name={name}
@@ -28,6 +29,7 @@ const FloatInput: React.FC<Props> = ({
         onChange={onChange}
         min={min}
         max={max}
+        value={value}
       />
       <label htmlFor="name" className={`label-float ${classLabel || ""}`}>
         {label}

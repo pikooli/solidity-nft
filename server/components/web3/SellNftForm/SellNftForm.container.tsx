@@ -9,5 +9,5 @@ type SellNftFormProps = {
 export const SellNftForm = (props: SellNftFormProps) => {
   const { nft } = props;
   const hook = useSellNftForm({ nft });
-  return <SellNftFormView {...hook} />;
+  return <SellNftFormView {...hook} nft={nft} />;
 };

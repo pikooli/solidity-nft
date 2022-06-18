@@ -6,6 +6,8 @@ export type SellNftFormViewProps = {
   onSubmit: (e: FormEvent) => void;
   setValues: React.Dispatch<SetStateAction<Obj>>;
   response: string;
+  values: Obj;
+  nft: Nft;
 };
 
 export const SellNftFormView: React.FC<SellNftFormViewProps> = ({
@@ -13,16 +15,20 @@ export const SellNftFormView: React.FC<SellNftFormViewProps> = ({
   onSubmit,
   setValues,
   response,
+  values,
+  nft,
 }) => {
   return (
     <form className={`text-black ${className || ""}`} onSubmit={onSubmit}>
       <FloatInput
         type="number"
         name="eth"
-        label="Price Eth"
-        onChange={(e) =>
-          setValues((prev: Obj) => ({ ...prev, price: e.target.value }))
-        }
+        className="mt-3"
+        label={nft ? "Update your NFT price" : "Sell your NFT"}
+        value={values.price}
+        onChange={(e) => {
+          setValues((prev: Obj) => ({ ...prev, price: e.target.value }));
+        }}
       />
       <button
         type="submit"

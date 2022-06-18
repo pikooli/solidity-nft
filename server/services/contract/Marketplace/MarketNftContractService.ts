@@ -2,23 +2,25 @@ import { Contract } from "web3-eth-contract";
 import Web3 from "web3";
 import { AbiItem } from "web3-utils";
 import MarketNftAbi from "public/MarketNft.json";
+import { createContract } from "services/contract/contractServices";
+
+const CONTRACTADDRESS = process.env.CONTRACT_ADDRESS_MARKET || "";
+const networkAddress = process.env.NETWORK_ADDRESS || "";
+const provider = new Web3(new Web3.providers.HttpProvider(networkAddress));
 
 export let contract: Contract | null = null;
+// only function directely connected to the contract
 
-export const getContract = ({
-  provider,
-  contractAddress,
-}: {
-  provider: Web3;
-  contractAddress: string;
-}) => {
+// More for backend use
+export const getContract = () => {
   if (contract) {
     return contract;
   }
-  contract = new provider.eth.Contract(
-    MarketNftAbi.abi as AbiItem[],
-    contractAddress
-  );
+  contract = createContract({
+    provider,
+    contractAddress: CONTRACTADDRESS,
+    abi: MarketNftAbi.abi as AbiItem[],
+  });
   return contract;
 };
 

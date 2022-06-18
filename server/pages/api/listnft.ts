@@ -9,6 +9,6 @@ export default async function listNft(
   if (!account) {
     return res.status(422).json({ error: "Missing value" });
   }
-  const nfts = await prismaService.findNfts({ account: account as string });
+  const nfts = await prismaService.findNfts({ accountId: account as string });
   res.json({ nfts });
 }

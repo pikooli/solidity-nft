@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import fetch from "lib/customFetch";
 import AppContext from "components/AppContext";
-import {} from "services/MarketNftContractService";
+import {} from "services/contract/Marketplace/MarketNftContractService";
 
 const URL = "/api/listnft";
 

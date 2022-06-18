@@ -1,5 +1,6 @@
 import Web3 from "web3";
 
+// for web browser
 const getWeb3 = () =>
   new Promise<Web3>((resolve, reject) => {
     // Wait for loading completion to avoid race conditions with web3 injection timing.

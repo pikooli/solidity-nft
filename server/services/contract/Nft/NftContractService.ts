@@ -2,25 +2,25 @@ import { Contract, PastEventOptions } from "web3-eth-contract";
 import Web3 from "web3";
 import { AbiItem } from "web3-utils";
 import NftAbi from "public/Nft.json";
+import { createContract } from "services/contract/contractServices";
+
+const CONTRACTADDRESS = process.env.CONTRACT_ADDRESS_NFT || "";
+const networkAddress = process.env.NETWORK_ADDRESS || "";
+const provider = new Web3(new Web3.providers.HttpProvider(networkAddress));
 
 export let contract: Contract | null = null;
 
 // ==================
 // more for backend
-export const getContract = ({
-  provider,
-  contractAddress,
-}: {
-  provider: Web3;
-  contractAddress: string;
-}) => {
+export const getContract = () => {
   if (contract) {
     return contract;
   }
-  contract = new provider.eth.Contract(
-    NftAbi.abi as AbiItem[],
-    contractAddress
-  );
+  contract = createContract({
+    provider,
+    contractAddress: CONTRACTADDRESS,
+    abi: NftAbi.abi as AbiItem[],
+  });
   return contract;
 };
 

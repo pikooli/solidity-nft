@@ -1,9 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import fetch from "lib/customFetch";
+import { fetchAccountNft } from "services/api/ApiService";
 import AppContext from "components/AppContext";
-import {} from "services/MarketNftContractService";
-
-const URL = "/api/listnft";
 
 export const CollectionsHook = () => {
   const context = useContext(AppContext);
@@ -12,12 +9,8 @@ export const CollectionsHook = () => {
 
   useEffect(() => {
     if (account) {
-      fetch({ url: URL, params: { account } }).then((res) => {
-        if (res.status === 200) {
-          res.json().then((data) => {
-            setNfts(data.nfts);
-          });
-        }
+      fetchAccountNft(account).then((nfts) => {
+        setNfts(nfts);
       });
     }
   }, [account]);

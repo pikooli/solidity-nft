@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import fetch from "lib/customFetch";
 import AppContext from "components/AppContext";
-import { payToMint } from "services/NftContractService";
+import { payToMint } from "services/contract/Nft/NftContractService";
 
 const URL_FILE = "/api/uploadfile";
 const URL_NFT = "/api/uploadnft";

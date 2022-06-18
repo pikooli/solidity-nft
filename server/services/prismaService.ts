@@ -3,11 +3,11 @@ import { Prisma } from "@prisma/client";
 import prisma from "lib/prisma";
 
 const storeNft = async ({
-  account,
+  accountId,
   tokenId,
   tokenUri,
 }: {
-  account: string;
+  accountId: string;
   tokenId: number;
   tokenUri: string;
 }) => {
@@ -17,10 +17,10 @@ const storeNft = async ({
     user: {
       connectOrCreate: {
         where: {
-          id: account,
+          id: accountId,
         },
         create: {
-          id: account,
+          id: accountId,
         },
       },
     },
@@ -28,23 +28,26 @@ const storeNft = async ({
   return await prisma.nfts.create({ data: data });
 };
 
-const upldateNft = async ({
-  account,
+const updateNft = async ({
+  accountId,
   tokenId,
+  price,
 }: {
-  account: string;
+  accountId: string;
   tokenId: number;
+  price?: number;
 }) => {
   const args: Prisma.NftsUpdateArgs = {
     where: { id: tokenId },
     data: {
+      price: price || 0,
       user: {
         connectOrCreate: {
           where: {
-            id: account,
+            id: accountId,
           },
           create: {
-            id: account,
+            id: accountId,
           },
         },
       },
@@ -53,11 +56,11 @@ const upldateNft = async ({
   return await prisma.nfts.update(args);
 };
 
-const findNfts = async ({ account }: { account: string }) => {
+const findNfts = async ({ accountId }: { accountId: string }) => {
   const args: Prisma.NftsFindManyArgs = {
-    where: { userId: account },
+    where: { userId: accountId },
   };
   return await prisma.nfts.findMany(args);
 };
 
-export default { storeNft, upldateNft, findNfts };
+export default { storeNft, updateNft, findNfts };

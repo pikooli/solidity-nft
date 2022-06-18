@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import AppContext from "components/AppContext";
-import { getPastTransfer } from "services/NftContractService";
+import { getPastTransfer } from "services/contract/Nft/NftContractService";
 
 export const TransfersHook = () => {
   const context = useContext(AppContext);
@@ -10,6 +10,7 @@ export const TransfersHook = () => {
 
   useEffect(() => {
     if (contractNft && account) {
+      console.log(contractNft);
       getPastTransfer(contractNft, { to: account }).then((event) =>
         setTransfers(event)
       );
