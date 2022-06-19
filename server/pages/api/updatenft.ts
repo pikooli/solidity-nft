@@ -16,8 +16,6 @@ export default async function updateNft(
   res: NextApiResponse
 ) {
   const { account, price, tokenId } = req.body;
-  console.log(req.body);
-  console.log(CONTRACTADDRESS);
   const token = await getListing({
     contract,
     tokenId,

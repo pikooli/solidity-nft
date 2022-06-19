@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import AppContext from "components/AppContext";
 import {} from "services/contract/Marketplace/MarketNftContractService";
-
-const URL = "/api/listnft";
+import { fetchSellNfts } from "services/api/ApiService";
 
 export const useMarketPlace = () => {
   const context = useContext(AppContext);
@@ -10,15 +9,12 @@ export const useMarketPlace = () => {
   const [nfts, setNfts] = useState<Nft[]>();
 
   useEffect(() => {
-    // if (account) {
-    //   fetch({ url: URL, params: { account } }).then((res) => {
-    //     if (res.status === 200) {
-    //       res.json().then((data) => {
-    //         setNfts(data.nfts);
-    //       });
-    //     }
-    //   });
-    // }
+    fetchSellNfts().then((nfts) => {
+      if (nfts) {
+        console.log(nfts);
+        setNfts(nfts);
+      }
+    });
   }, [account]);
 
   return {

@@ -1,6 +1,7 @@
 import React from "react";
 import ReactImgPrev from "react-img-prev";
 import { FloatInput, FloatTextArea } from "components/forms";
+
 type Props = {
   className?: string;
   onSubmit?: React.FormEventHandler<HTMLFormElement>;

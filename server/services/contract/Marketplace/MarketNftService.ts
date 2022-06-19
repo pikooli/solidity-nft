@@ -4,9 +4,11 @@ import {
   listItem,
   updateListing,
   getListing,
+  buyItem,
 } from "services/contract/Marketplace/MarketNftContractService";
 
 // here is function that can make some check and call multiple function of the contract
+const CONTRACTADDRESS = process.env.CONTRACT_ADDRESS_MARKET || "";
 
 type ListNft = {
   contractNft: Contract;
@@ -18,6 +20,7 @@ type ListNft = {
   contractAddress: string;
 };
 
+//
 export const listNft = async ({
   contractNft,
   contractMarket,
@@ -68,6 +71,51 @@ export const listNft = async ({
     price,
     tokenId,
     senderId,
+  });
+  return translation;
+};
+
+type BuyNft = {
+  contractNft: Contract;
+  contractMarket: Contract;
+  tokenId: string;
+  senderId: string;
+  contractAddress: string;
+};
+
+//
+export const buyNft = async ({
+  contractNft,
+  contractMarket,
+  tokenId,
+  senderId,
+  contractAddress,
+}: BuyNft) => {
+  const approved = await getApproved({
+    contract: contractNft,
+    tokenId,
+  });
+  if (approved !== CONTRACTADDRESS) {
+    return;
+  }
+
+  const transactionListing = await getListing({
+    contract: contractMarket,
+    contractAddress,
+    tokenId,
+  });
+  console.log(transactionListing, tokenId);
+  if (transactionListing) {
+    if (!transactionListing.price) {
+      return;
+    }
+  }
+  const translation = await buyItem({
+    contract: contractMarket,
+    contractAddress,
+    tokenId,
+    senderId,
+    price: transactionListing.price,
   });
   return translation;
 };

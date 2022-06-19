@@ -2,6 +2,7 @@ import { Prisma } from "@prisma/client";
 
 import prisma from "lib/prisma";
 
+//
 const storeNft = async ({
   accountId,
   tokenId,
@@ -28,6 +29,7 @@ const storeNft = async ({
   return await prisma.nfts.create({ data: data });
 };
 
+//
 const updateNft = async ({
   accountId,
   tokenId,
@@ -56,11 +58,24 @@ const updateNft = async ({
   return await prisma.nfts.update(args);
 };
 
-const findNfts = async ({ accountId }: { accountId: string }) => {
+//
+const findAccountNfts = async ({ accountId }: { accountId: string }) => {
   const args: Prisma.NftsFindManyArgs = {
     where: { userId: accountId },
   };
   return await prisma.nfts.findMany(args);
 };
 
-export default { storeNft, updateNft, findNfts };
+//
+const findSellNfts = async () => {
+  const args: Prisma.NftsFindManyArgs = {
+    where: {
+      price: {
+        gt: 0,
+      },
+    },
+  };
+  return await prisma.nfts.findMany(args);
+};
+
+export default { storeNft, updateNft, findAccountNfts, findSellNfts };

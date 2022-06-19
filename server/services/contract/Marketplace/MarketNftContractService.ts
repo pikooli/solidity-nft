@@ -93,3 +93,27 @@ export const getListing = async ({
     console.log("transfer didn't work", e);
   }
 };
+
+// ==================
+export const buyItem = async ({
+  contract,
+  contractAddress,
+  tokenId,
+  senderId,
+  price,
+}: {
+  contract: Contract;
+  contractAddress: string;
+  tokenId: string;
+  senderId: string;
+  price: string;
+}) => {
+  try {
+    return await contract.methods["buyItem(address,uint256)"](
+      contractAddress,
+      tokenId
+    ).send({ from: senderId, value: Web3.utils.toWei(price) });
+  } catch (e) {
+    console.log("transfer didn't work", e);
+  }
+};

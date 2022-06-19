@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { fetchAccountNft } from "services/api/ApiService";
+import { fetchAccountNfts } from "services/api/ApiService";
 import AppContext from "components/AppContext";
 
 export const CollectionsHook = () => {
@@ -9,7 +9,7 @@ export const CollectionsHook = () => {
 
   useEffect(() => {
     if (account) {
-      fetchAccountNft(account).then((nfts) => {
+      fetchAccountNfts(account).then((nfts) => {
         setNfts(nfts);
       });
     }

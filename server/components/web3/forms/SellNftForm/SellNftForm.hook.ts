@@ -1,13 +1,11 @@
 import { useState, useContext, useEffect, useCallback } from "react";
 import AppContext from "components/AppContext";
 import { listNft } from "services/contract/Marketplace/MarketNftService";
-import fetch from "lib/customFetch";
+import { updatePriceNft } from "services/api/ApiService";
 
 type Props = {
   nft: Nft;
 };
-
-const URL_UPDATE = "/api/updatenft";
 
 export const useSellNftForm = ({ nft }: Props) => {
   const [values, setValues] = useState<Obj>({
@@ -15,18 +13,14 @@ export const useSellNftForm = ({ nft }: Props) => {
   });
   const [response, setResponse] = useState("");
   const context = useContext(AppContext);
-  const account = context?.values?.account;
-  const contractNft = context?.values?.contractNft;
-  const contractMarketNft = context?.values?.contractMarketNft;
-  const to = process.env.CONTRACT_ADDRESS_MARKET;
-  const tokenId = nft.id;
-  const contractAddress = process.env.CONTRACT_ADDRESS_NFT;
-
-  useEffect(() => {
-    console.log(nft);
-  }, []);
 
   const ListNftToSell = useCallback(async () => {
+    const to = process.env.CONTRACT_ADDRESS_MARKET;
+    const contractAddress = process.env.CONTRACT_ADDRESS_NFT;
+    const account = context?.values?.account;
+    const contractNft = context?.values?.contractNft;
+    const contractMarketNft = context?.values?.contractMarketNft;
+    const tokenId = nft.id;
     const price = values.price;
     if (to && contractNft && contractMarketNft && contractAddress && account) {
       const transaction = await listNft({
@@ -39,15 +33,7 @@ export const useSellNftForm = ({ nft }: Props) => {
         senderId: account,
       });
       if (transaction) {
-        const body = {
-          tokenId,
-          price,
-          account,
-        };
-        fetch({ url: URL_UPDATE, method: "POST", body }).then((res) => {
-          console.log(res);
-          res.json().then((data) => console.log(data));
-        });
+        await updatePriceNft({ tokenId: Number(tokenId), price, account });
         return setResponse("Nft price is set");
       }
       setResponse("Something went wrong");

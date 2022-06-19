@@ -1,6 +1,6 @@
 import React from "react";
-import { useSellNftForm } from "components/web3/SellNftForm/SellNftForm.hook";
-import { SellNftFormView } from "components/web3/SellNftForm/SellNftForm.view";
+import { useSellNftForm } from "components/web3/forms/SellNftForm/SellNftForm.hook";
+import { SellNftFormView } from "components/web3/forms/SellNftForm/SellNftForm.view";
 
 type SellNftFormProps = {
   nft: Nft;

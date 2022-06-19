@@ -1,10 +1,10 @@
 import React from "react";
 import Layout from "components/Layout";
 import { Nft } from "components/web3";
-import { SellNftForm } from "components/web3/SellNftForm";
+import { SellNftForm } from "components/web3/forms/SellNftForm";
 
 export type CollectionsViewProps = {
-  nfts: Nft[];
+  nfts?: Nft[];
 };
 
 export const CollectionsView = ({ nfts }: CollectionsViewProps) => {

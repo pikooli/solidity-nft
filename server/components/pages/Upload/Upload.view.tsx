@@ -1,7 +1,8 @@
 import Layout from "components/Layout";
-import CreateNftForm from "components/CreateNftForm";
+import CreateNftForm from "components/pages/Upload/CreateNftForm";
 import ViewTranslaction from "components/ViewTransaction";
 
+//
 export type UploadViewProps = {
   onSubmit: React.FormEventHandler<HTMLFormElement>;
   values: Obj;
@@ -9,6 +10,7 @@ export type UploadViewProps = {
   result: String;
 };
 
+//
 export const UploadView = ({
   onSubmit,
   values,
