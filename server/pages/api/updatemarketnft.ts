@@ -11,7 +11,7 @@ interface NextApiRequestCustom extends NextApiRequest {
 }
 
 // update the price on the NFT market
-export default async function updatenft(
+export default async function updateMarketNft(
   req: NextApiRequestCustom,
   res: NextApiResponse
 ) {
@@ -22,11 +22,19 @@ export default async function updatenft(
   if (!account || isNaN(price) || tokenId === (undefined || null)) {
     return res.status(400).json({ errors: { message: "bad body" } });
   }
-  const result = await prismaService.updateNft({
-    accountId: account,
-    tokenId: tokenId,
-    price: Number(price),
+  const token = await getListing({
+    contract,
+    tokenId,
+    contractAddress: CONTRACTADDRESS,
   });
-  console.log("result", result);
-  return res.json({ success: "token price updated" });
+  if (token && token.price === price) {
+    const result = await prismaService.updateNft({
+      accountId: account,
+      tokenId: tokenId,
+      price: Number(price),
+    });
+    console.log("result", result);
+    return res.json({ success: "token price updated" });
+  }
+  return res.json({ success: "Not same price" });
 }

@@ -41,17 +41,17 @@ export const getTransaction = async (provider: Web3, hash: string) => {
 };
 
 // ==================
-export const getOwnerOf = async (contract: Contract, tokenId: Number) => {
+export const getOwnerOf = async (contract: Contract, tokenId: String) => {
   return await contract.methods.ownerOf(tokenId).call();
 };
 
 // ==================
-export const getTokenUri = async (contract: Contract, tokenId: Number) => {
+export const getTokenUri = async (contract: Contract, tokenId: String) => {
   return await contract.methods.tokenURI(tokenId).call();
 };
 
 // ==================
-export const getTokensUri = async (contract: Contract, tokensId: Number[]) => {
+export const getTokensUri = async (contract: Contract, tokensId: String[]) => {
   const tokensUri = [];
   for (let i = 0; i < tokensId.length; i++) {
     const tokenUri = await getTokenUri(contract, tokensId[i]);

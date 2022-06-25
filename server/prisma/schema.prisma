@@ -18,7 +18,7 @@ model Users {
 }
 
 model Nfts {
-  id        Int      @id
+  id        String   @id
   price     Int      @default(0)
   uri       String
   user      Users    @relation(fields: [userId], references: [id])

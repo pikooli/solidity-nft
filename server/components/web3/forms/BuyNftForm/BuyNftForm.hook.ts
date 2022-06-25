@@ -1,7 +1,7 @@
 import { useState, useContext, useCallback } from "react";
 import AppContext from "components/AppContext";
 import { buyNft } from "services/contract/Marketplace/MarketNftService";
-import { updatePriceNft } from "services/api/ApiService";
+import { updateNft } from "services/api/ApiService";
 
 type Props = {
   nft: Nft;
@@ -26,8 +26,10 @@ export const useBuyNftForm = ({ nft }: Props) => {
         tokenId,
         senderId: account,
       });
-      console.log(transaction);
-      setResponse("Something went wrong");
+      if (!transaction) {
+        setResponse("Something went wrong");
+      }
+      await updateNft({ account, tokenId, price: 0 });
     }
   }, [nft]);
 

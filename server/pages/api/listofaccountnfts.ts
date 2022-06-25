@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import prismaService from "services/prismaService";
+import * as prismaService from "services/prismaService";
 
 //
 export default async function listofaccountnfts(

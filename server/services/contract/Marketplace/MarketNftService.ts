@@ -9,6 +9,7 @@ import {
 
 // here is function that can make some check and call multiple function of the contract
 const CONTRACTADDRESS = process.env.CONTRACT_ADDRESS_MARKET || "";
+const NULL_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 type ListNft = {
   contractNft: Contract;
@@ -34,7 +35,6 @@ export const listNft = async ({
     contract: contractNft,
     tokenId,
   });
-
   if (approved !== to) {
     const translation = await approve({
       contract: contractNft,
@@ -46,24 +46,24 @@ export const listNft = async ({
       return;
     }
   }
-
   const transactionListing = await getListing({
     contract: contractMarket,
     contractAddress,
     tokenId,
   });
-  if (transactionListing) {
-    if (transactionListing.price !== price) {
-      const translation = await updateListing({
-        contract: contractMarket,
-        contractAddress,
-        price,
-        tokenId,
-        senderId,
-      });
-      return translation;
-    }
-    return;
+  if (
+    transactionListing &&
+    transactionListing.price != price &&
+    transactionListing.seller != NULL_ADDRESS
+  ) {
+    const translation = await updateListing({
+      contract: contractMarket,
+      contractAddress,
+      price,
+      tokenId,
+      senderId,
+    });
+    return translation;
   }
   const translation = await listItem({
     contract: contractMarket,
@@ -104,7 +104,6 @@ export const buyNft = async ({
     contractAddress,
     tokenId,
   });
-  console.log(transactionListing, tokenId);
   if (transactionListing) {
     if (!transactionListing.price) {
       return;

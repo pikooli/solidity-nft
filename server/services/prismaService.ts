@@ -3,13 +3,13 @@ import { Prisma } from "@prisma/client";
 import prisma from "lib/prisma";
 
 //
-const storeNft = async ({
+export const storeNft = async ({
   accountId,
   tokenId,
   tokenUri,
 }: {
   accountId: string;
-  tokenId: number;
+  tokenId: string;
   tokenUri: string;
 }) => {
   const data: Prisma.NftsCreateInput = {
@@ -30,13 +30,13 @@ const storeNft = async ({
 };
 
 //
-const updateNft = async ({
+export const updateNft = async ({
   accountId,
   tokenId,
   price,
 }: {
   accountId: string;
-  tokenId: number;
+  tokenId: string;
   price?: number;
 }) => {
   const args: Prisma.NftsUpdateArgs = {
@@ -59,7 +59,7 @@ const updateNft = async ({
 };
 
 //
-const findAccountNfts = async ({ accountId }: { accountId: string }) => {
+export const findAccountNfts = async ({ accountId }: { accountId: string }) => {
   const args: Prisma.NftsFindManyArgs = {
     where: { userId: accountId },
   };
@@ -67,7 +67,7 @@ const findAccountNfts = async ({ accountId }: { accountId: string }) => {
 };
 
 //
-const findSellNfts = async () => {
+export const findSellNfts = async () => {
   const args: Prisma.NftsFindManyArgs = {
     where: {
       price: {
@@ -78,4 +78,12 @@ const findSellNfts = async () => {
   return await prisma.nfts.findMany(args);
 };
 
-export default { storeNft, updateNft, findAccountNfts, findSellNfts };
+//
+export const removeNfts = async ({ id }: { id: string }) => {
+  const args: Prisma.NftsDeleteArgs = {
+    where: {
+      id,
+    },
+  };
+  return await prisma.nfts.delete(args);
+};
