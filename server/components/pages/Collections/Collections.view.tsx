@@ -12,9 +12,8 @@ export const CollectionsView = ({ nfts }: CollectionsViewProps) => {
     <Layout>
       <div className="w-3/4 break-all">
         {nfts?.map((nft) => (
-          <div key={nft.id} className="border w-60 m-3">
+          <div key={nft.id} className="w-60 m-3">
             <Nft metadatapath={nft.uri} />
-            <SellNftForm nft={nft} />
           </div>
         ))}
       </div>
