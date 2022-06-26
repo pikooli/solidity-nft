@@ -11,6 +11,16 @@ export const fetchAccountNfts = async (account: string) => {
 };
 
 //
+export const fetchNft = async (id: string) => {
+  const URL = "/api/nft";
+  const response = await fetch({ url: URL, params: { id } });
+  if (response.status === 200) {
+    const data = await response.json();
+    return data.nft;
+  }
+};
+
+//
 export const fetchSellNfts = async () => {
   const URL = "/api/listsellnfts";
   const response = await fetch({ url: URL });
@@ -88,6 +98,23 @@ export const updateNft = async ({
     method: "PUT",
     url: URL,
     body: { account, tokenId, price },
+  });
+  return response;
+};
+
+//
+export const unSellNft = async ({
+  account,
+  tokenId,
+}: {
+  account: string;
+  tokenId: string;
+}) => {
+  const URL = "/api/unsellnft";
+  const response = await fetch({
+    method: "DELETE",
+    url: URL,
+    body: { account, tokenId },
   });
   return response;
 };

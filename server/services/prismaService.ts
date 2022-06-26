@@ -79,6 +79,29 @@ export const findSellNfts = async () => {
 };
 
 //
+export const findNftById = async ({ id }: { id: string }) => {
+  const args: Prisma.NftsFindFirstArgs = {
+    where: {
+      id,
+    },
+  };
+  return await prisma.nfts.findFirst(args);
+};
+
+//
+export const unSellNft = async ({ id }: { id: string }) => {
+  const args: Prisma.NftsUpdateArgs = {
+    where: {
+      id,
+    },
+    data: {
+      price: 0,
+    },
+  };
+  return await prisma.nfts.update(args);
+};
+
+//
 export const removeNfts = async ({ id }: { id: string }) => {
   const args: Prisma.NftsDeleteArgs = {
     where: {

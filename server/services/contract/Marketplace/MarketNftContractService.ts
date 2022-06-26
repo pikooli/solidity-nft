@@ -117,3 +117,25 @@ export const buyItem = async ({
     console.log("transfer didn't work", e);
   }
 };
+
+// ==================
+export const cancelListing = async ({
+  contract,
+  contractAddress,
+  tokenId,
+  senderId,
+}: {
+  contract: Contract;
+  contractAddress: string;
+  tokenId: string;
+  senderId: string;
+}) => {
+  try {
+    return await contract.methods["cancelListing(address,uint256)"](
+      contractAddress,
+      tokenId
+    ).send({ from: senderId });
+  } catch (e) {
+    console.log("transfer didn't work", e);
+  }
+};

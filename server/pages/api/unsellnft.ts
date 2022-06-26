@@ -10,8 +10,7 @@ interface NextApiRequestCustom extends NextApiRequest {
   body: { tokenId: string; account: string };
 }
 
-// update the price on the NFT market
-export default async function removeNft(
+export default async function unSellNft(
   req: NextApiRequestCustom,
   res: NextApiResponse
 ) {
@@ -30,7 +29,7 @@ export default async function removeNft(
   if (!token) {
     return res.status(404).json({ success: "token not found" });
   }
-  await prismaService.removeNfts({
+  await prismaService.unSellNft({
     id: tokenId,
   });
   return res.json({ success: "token have been removed" });

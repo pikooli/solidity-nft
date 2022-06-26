@@ -5,6 +5,7 @@ import {
   updateListing,
   getListing,
   buyItem,
+  cancelListing,
 } from "services/contract/Marketplace/MarketNftContractService";
 
 // here is function that can make some check and call multiple function of the contract
@@ -73,6 +74,35 @@ export const listNft = async ({
     senderId,
   });
   return translation;
+};
+
+type CancelListingNft = {
+  contractMarket: Contract;
+  tokenId: string;
+  senderId: string;
+  contractAddress: string;
+};
+//
+export const cancelListingNft = async ({
+  contractMarket,
+  tokenId,
+  senderId,
+  contractAddress,
+}: CancelListingNft) => {
+  const transactionListing = await getListing({
+    contract: contractMarket,
+    contractAddress,
+    tokenId,
+  });
+  if (transactionListing && transactionListing.seller != NULL_ADDRESS) {
+    const translation = await cancelListing({
+      contract: contractMarket,
+      contractAddress,
+      tokenId,
+      senderId,
+    });
+    return translation;
+  }
 };
 
 type BuyNft = {
