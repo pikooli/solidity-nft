@@ -1,2 +1,2 @@
-import { Transfers } from "components/pages/Transfers";
+import { Transfers } from "src/pages/Transfers";
 export default Transfers;

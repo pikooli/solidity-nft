@@ -1,2 +1,2 @@
-import { Index } from "components/pages/Index";
+import { Index } from "src/pages/Index";
 export default Index;

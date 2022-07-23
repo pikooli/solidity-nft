@@ -2,8 +2,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import formidable, { File } from "formidable";
 
-import fileService from "services/fileService";
-import metadataService from "services/metadataService";
+import fileService from "src/backServices/fileService";
+import metadataService from "src/backServices/metadataService";
 
 export const config = {
   api: {
@@ -23,13 +23,13 @@ export default async function uploadFile(
       if (err) {
         return res.status(500).json({ error: "errors.tech" });
       }
-      const { account, name, description } = fields;
+      const { accountId, name, description } = fields;
       if (!name || !description || !files.files) {
         return res.status(422).json({ error: "Missing value" });
       }
       const image = await fileService.uploadFile({
         file: files.files as File,
-        account: account as string,
+        accountId: accountId as string,
         basePath: BASEPATH,
       });
       if (!image) {

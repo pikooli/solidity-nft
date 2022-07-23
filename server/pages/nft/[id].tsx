@@ -1,2 +1,2 @@
-import { Nft } from "components/pages/Nft";
+import { Nft } from "src/pages/Nft";
 export default Nft;

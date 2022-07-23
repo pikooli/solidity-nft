@@ -1,27 +1,27 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import * as prismaService from "services/prismaService";
-import { getContract } from "services/contract/Nft/NftContractService";
-import * as contractNftService from "services/contract/Nft/NftContractService";
+import * as prismaService from "src/services/prismaServices";
+import { getContractNft } from "src/backServices/contractsServices";
+import * as contractNftService from "src/services/contractServices/nft/nftContractService";
 
-const contract = getContract();
+const contract = getContractNft();
 interface NextApiRequestCustom extends NextApiRequest {
-  body: { tokenId: string; account: string };
+  body: { tokenId: string; accountId: string };
 }
 export default async function uploadNft(
   req: NextApiRequestCustom,
   res: NextApiResponse
 ) {
-  const { tokenId, account } = req.body;
+  const { tokenId, accountId } = req.body;
   const ownerOfNft = await contractNftService.getOwnerOf(contract, tokenId);
   const tokenUri = await contractNftService.getTokenUri(contract, tokenId);
-  if (!account || !tokenId || !tokenUri) {
+  if (!accountId || !tokenId || !tokenUri) {
     return res.status(422).json({ error: "Missing value" });
   }
-  if (account !== ownerOfNft) {
+  if (accountId !== ownerOfNft) {
     return res.status(403).json({ error: "Not authorized" });
   }
   await prismaService.storeNft({
-    accountId: account,
+    accountId: accountId,
     tokenId: tokenId,
     tokenUri,
   });

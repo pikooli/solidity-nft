@@ -1,2 +1,2 @@
-import { MarketPlace } from "components/pages/MarketPlace";
+import { MarketPlace } from "src/pages/MarketPlace";
 export default MarketPlace;

@@ -1,2 +1,2 @@
-import { Upload } from "components/pages/Upload";
+import { Upload } from "src/pages/Upload";
 export default Upload;

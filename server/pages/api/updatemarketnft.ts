@@ -1,13 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getContract } from "services/contract/Marketplace/MarketNftContractService";
-import { getListing } from "services/contract/Marketplace/MarketNftContractService";
-import * as prismaService from "services/prismaService";
+import { getContractNft } from "src/backServices/contractsServices";
+import { getListing } from "src/services/contractServices/marketplace/marketNftContractService";
+import * as prismaService from "src/services/prismaServices";
 
 const CONTRACTADDRESS = process.env.CONTRACT_ADDRESS_NFT || "";
 
-const contract = getContract();
+const contract = getContractNft();
 interface NextApiRequestCustom extends NextApiRequest {
-  body: { price: number; tokenId: string; account: string };
+  body: { price: number; tokenId: string; accountId: string };
 }
 
 // update the price on the NFT market
@@ -18,8 +18,8 @@ export default async function updateMarketNft(
   if (String.prototype.toUpperCase.call(req.method) !== "PUT") {
     return res.status(400).json({ errors: { message: "bad methods" } });
   }
-  const { account, price, tokenId } = req.body;
-  if (!account || isNaN(price) || tokenId === (undefined || null)) {
+  const { accountId, price, tokenId } = req.body;
+  if (!accountId || isNaN(price) || tokenId === (undefined || null)) {
     return res.status(400).json({ errors: { message: "bad body" } });
   }
   const token = await getListing({
@@ -29,11 +29,10 @@ export default async function updateMarketNft(
   });
   if (token && token.price === price) {
     const result = await prismaService.updateNft({
-      accountId: account,
+      accountId: accountId,
       tokenId: tokenId,
       price: Number(price),
     });
-    console.log("result", result);
     return res.json({ success: "token price updated" });
   }
   return res.json({ success: "Not same price" });

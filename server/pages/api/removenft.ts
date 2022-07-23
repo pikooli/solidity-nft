@@ -1,13 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getContract } from "services/contract/Marketplace/MarketNftContractService";
-import { getListing } from "services/contract/Marketplace/MarketNftContractService";
-import * as prismaService from "services/prismaService";
+import { getContractMarket } from "src/backServices/contractsServices";
+import { getListing } from "src/services/contractServices/marketplace/marketNftContractService";
+import * as prismaService from "src/services/prismaServices";
 
 const CONTRACTADDRESS = process.env.CONTRACT_ADDRESS_NFT || "";
 
-const contract = getContract();
+const contract = getContractMarket();
 interface NextApiRequestCustom extends NextApiRequest {
-  body: { tokenId: string; account: string };
+  body: { tokenId: string; accountId: string };
 }
 
 // update the price on the NFT market
@@ -18,8 +18,8 @@ export default async function removeNft(
   if (String.prototype.toUpperCase.call(req.method) !== "DELETE") {
     return res.status(400).json({ errors: { message: "bad methods" } });
   }
-  const { account, tokenId } = req.body;
-  if (!account || tokenId === (undefined || null)) {
+  const { accountId, tokenId } = req.body;
+  if (!accountId || tokenId === (undefined || null)) {
     return res.status(400).json({ errors: { message: "bad body" } });
   }
   const token = await getListing({

@@ -1,5 +1,5 @@
 import type { AppProps } from "next/app";
-import { AppProvider } from "components/AppContext";
+import { AppProvider } from "src/components/AppContext";
 import "../styles/globals.scss";
 
 declare global {
