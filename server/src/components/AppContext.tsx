@@ -20,6 +20,9 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
       const contractNft = await getContract.getContractNft(web3);
       const contractMarketNft = await getContract.getContractMarketNft(web3);
       const accountId = await getAccount(web3);
+      if (!contractNft || !contractMarketNft) {
+        console.log("Errror loading contracts");
+      }
       setValues((prev: ContextValues) => ({
         ...prev,
         provider: web3,

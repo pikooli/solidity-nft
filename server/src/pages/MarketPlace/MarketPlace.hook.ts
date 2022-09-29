@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import {} from "src/services/contractServices/marketplace/marketNftContractService";
 import { fetchListSellNfts } from "src/services/apiServices";
 
 export const useMarketPlace = () => {

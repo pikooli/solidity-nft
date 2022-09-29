@@ -62,6 +62,7 @@ export const getListing = async ({
   tokenId: string;
 }) => {
   try {
+    console.log(contractAddress, tokenId);
     return await contract.methods["getListing(address,uint256)"](
       contractAddress,
       tokenId

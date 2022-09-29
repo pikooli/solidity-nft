@@ -1,15 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getContractNft } from "src/backServices/contractsServices";
+import { getContractMarket } from "src/backServices/contractsServices";
 import { getListing } from "src/services/contractServices/marketplace/marketNftContractService";
 import * as prismaService from "src/services/prismaServices";
 
-const CONTRACTADDRESS = process.env.CONTRACT_ADDRESS_NFT || "";
+const CONTRACTADDRESS = process.env.CONTRACT_ADDRESS_MARKET || "";
 
-const contract = getContractNft();
+const contract = getContractMarket();
 interface NextApiRequestCustom extends NextApiRequest {
   body: { price: number; tokenId: string; accountId: string };
 }
-
 // update the price on the NFT market
 export default async function updateMarketNft(
   req: NextApiRequestCustom,
@@ -27,7 +26,7 @@ export default async function updateMarketNft(
     tokenId,
     contractAddress: CONTRACTADDRESS,
   });
-  if (token && token.price === price) {
+  if (token && token.price !== price) {
     const result = await prismaService.updateNft({
       accountId: accountId,
       tokenId: tokenId,
